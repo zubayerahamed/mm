@@ -22,7 +22,10 @@ spring:
 
 springdoc:
   version: 2.2.1
+  api-docs: 
+    path: /api-docs
   swagger-ui:
+    path: /swagger-ui.html
     display-request-duration: true
     groups-order: DESC
     operationsSorter: method

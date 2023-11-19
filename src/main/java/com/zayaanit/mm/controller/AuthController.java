@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.zayaanit.mm.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +25,7 @@ public class AuthController extends AbstractBaseController<User, AuthenticationR
 
 	private AuthenticationService<AuthenticationReqDTO, AuthenticationResDTO> authservice;
 
-	public AuthController(AuthenticationService<AuthenticationReqDTO, AuthenticationResDTO> authservice) {
+	AuthController(AuthenticationService<AuthenticationReqDTO, AuthenticationResDTO> authservice) {
 		super(authservice);
 		this.authservice = authservice;
 	}

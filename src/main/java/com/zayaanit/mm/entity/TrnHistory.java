@@ -26,7 +26,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "TRN_HISTORY")
 @EqualsAndHashCode(callSuper = true)
-public class TransactionHistory extends IdentityIdGenerator {
+public class TrnHistory extends IdentityIdGenerator {
 
 	@Enumerated(EnumType.STRING)
 	private TransactionType transactionType;

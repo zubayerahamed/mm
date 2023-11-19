@@ -52,7 +52,7 @@ public class AuthenticationServiceImpl extends AbstractBaseService<User, Authent
 
 
 	@Override
-	public Response<AuthenticationResDTO> update(AuthenticationReqDTO reqDto) throws ServiceException {
+	public Response<AuthenticationResDTO> update(Long id, AuthenticationReqDTO reqDto) throws ServiceException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -65,21 +65,6 @@ public class AuthenticationServiceImpl extends AbstractBaseService<User, Authent
 		return null;
 	}
 
-
-
-	@Override
-	public Response<AuthenticationResDTO> getAllByChunk(int limit, int offset) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-	@Override
-	public Response<AuthenticationResDTO> delete(AuthenticationReqDTO reqDto) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 

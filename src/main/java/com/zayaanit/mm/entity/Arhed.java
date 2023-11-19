@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -41,4 +42,8 @@ public class Arhed extends IdentityIdGenerator {
 
 	@Temporal(TemporalType.TIME)
 	private Date transactionTime;
+
+	@OneToOne
+	@JoinColumn(name = "trn_history_id", nullable = true)
+	private TrnHistory trnHistory;
 }

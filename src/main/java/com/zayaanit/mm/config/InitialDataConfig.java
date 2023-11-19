@@ -28,7 +28,7 @@ public class InitialDataConfig implements ApplicationRunner {
 	private static final String SYSTEM_ADMIN_PASSWORD = "1234";
 
 	@Autowired private UserRepo userRepo;
-	@Autowired private BCryptPasswordEncoder encoder;
+	@Autowired private BCryptPasswordEncoder passwordEncoder;
 
 	@Transactional
 	@Override
@@ -39,7 +39,7 @@ public class InitialDataConfig implements ApplicationRunner {
 		if(!userOp.isPresent()) {
 			User u = new User();
 			u.setUsername(SYSTEM_ADMIN_USERNAME);
-			u.setPassword(encoder.encode(SYSTEM_ADMIN_PASSWORD));
+			u.setPassword(passwordEncoder.encode(SYSTEM_ADMIN_PASSWORD));
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.YEAR, 1);
 			u.setCreatedBy(SYSTEM_ADMIN_USERNAME);

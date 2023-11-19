@@ -66,13 +66,6 @@ public abstract class AbstractBaseService<E extends BaseEntity, REQ, RES> extend
 		return repository.save(entity);
 	}
 
-	protected E deleteEntity(E entity) {
-		entity.setUpdatedBy(getLoggedInUserDetails().getUsername());
-		entity.setUpdatedOn(new Date());
-		entity.setUser(getLoggedInUser());
-		return repository.save(entity);
-	}
-
 	protected MyUserDetail getLoggedInUserDetails() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if(auth == null || !auth.isAuthenticated()) return null;

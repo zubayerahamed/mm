@@ -11,6 +11,7 @@ import com.zayaanit.mm.service.BaseService;
 import com.zayaanit.mm.service.impl.CommonFunctionsImpl;
 import com.zayaanit.mm.util.Response;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,6 +21,7 @@ public class AbstractBaseController<E, REQ, RES> extends CommonFunctionsImpl<RES
 
 	protected final BaseService<REQ, RES> service;
 
+	@Operation(summary = "Get All", description = "Get All Data")
 	@GetMapping
 	@Override
 	public Response<RES> getAll() {
@@ -31,6 +33,7 @@ public class AbstractBaseController<E, REQ, RES> extends CommonFunctionsImpl<RES
 		}
 	}
 
+	@Operation(summary = "Save", description = "Save Data")
 	@PostMapping
 	@Override
 	public Response<RES> save(@RequestBody REQ req) {
@@ -42,17 +45,19 @@ public class AbstractBaseController<E, REQ, RES> extends CommonFunctionsImpl<RES
 		}
 	}
 
+	@Operation(summary = "Update", description = "Update Data By Id")
 	@PutMapping("/{id}")
 	@Override
 	public Response<RES> update(@PathVariable Long id, @RequestBody REQ req) {
 		try {
-			return service.update(req);
+			return service.update(id, req);
 		} catch (Exception e1) {
 			log.error("Error is {}, {}", e1.getMessage(), e1);
 			return getErrorResponse(e1.getMessage());
 		}
 	}
 
+	@Operation(summary = "Find", description = "Find Data By Id")
 	@GetMapping("/{id}")
 	@Override
 	public Response<RES> find(@PathVariable Long id) {
@@ -64,6 +69,7 @@ public class AbstractBaseController<E, REQ, RES> extends CommonFunctionsImpl<RES
 		}
 	}
 
+	@Operation(summary = "Delete", description = "Delete Data By Id")
 	@DeleteMapping("/{id}")
 	@Override
 	public Response<RES> delete(@PathVariable Long id) {
