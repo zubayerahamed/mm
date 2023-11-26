@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zayaanit.mm.dto.req.UserReqDto;
@@ -24,12 +24,10 @@ import com.zayaanit.mm.util.Response;
  * @author Zubayer Ahamed
  * @since Nov 17, 2023
  */
-@Component
+@Service
 public class UserServiceImpl extends AbstractBaseService<User, UserReqDto, UserResDto>  implements UserDetailsService, UserService<UserReqDto, UserResDto> {
 
 	private UserRepo userRepo;
-	
-	@Autowired BCryptPasswordEncoder passwordEncoder;
 
 	UserServiceImpl(UserRepo userRepo){
 		super(userRepo);

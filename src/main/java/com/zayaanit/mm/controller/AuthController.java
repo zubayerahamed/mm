@@ -3,8 +3,8 @@ package com.zayaanit.mm.controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.zayaanit.mm.annotations.RestApiController;
 import com.zayaanit.mm.dto.req.AuthenticationReqDTO;
 import com.zayaanit.mm.dto.res.AuthenticationResDTO;
 import com.zayaanit.mm.entity.User;
@@ -12,6 +12,8 @@ import com.zayaanit.mm.service.AuthenticationService;
 import com.zayaanit.mm.util.Response;
 
 import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -19,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
  * @since Nov 17, 2023
  */
 @Slf4j
-@RestApiController
-@RequestMapping("/api/auth")
+@RestController
+@RequestMapping("/api/v1/auth")
 public class AuthController extends AbstractBaseController<User, AuthenticationReqDTO, AuthenticationResDTO> {
 
 	private AuthenticationService<AuthenticationReqDTO, AuthenticationResDTO> authservice;
@@ -30,13 +32,32 @@ public class AuthController extends AbstractBaseController<User, AuthenticationR
 		this.authservice = authservice;
 	}
 
-	@PostMapping("/token")
-	public Response<AuthenticationResDTO> generateToken(@RequestBody AuthenticationReqDTO reqDto) {
+	@PostMapping("/register")
+	public Response<AuthenticationResDTO> register(@RequestBody AuthenticationReqDTO reqDto) {
+		try {
+			return authservice.registerUser(reqDto);
+		} catch (Exception e1) {
+			log.error("Error is {}, {}", e1.getMessage(), e1);
+			return getErrorResponse(e1.getMessage());
+		}
+	}
+
+	@PostMapping("/authenticate")
+	public Response<AuthenticationResDTO> authenticate(@RequestBody AuthenticationReqDTO reqDto) {
 		try {
 			return authservice.generateToken(reqDto);
 		} catch (Exception e1) {
 			log.error("Error is {}, {}", e1.getMessage(), e1);
 			return getErrorResponse(e1.getMessage());
+		}
+	}
+
+	@PostMapping("/refresh-token")
+	public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			authservice.refreshToken(request, response);
+		} catch (Exception e1) {
+			log.error("Error is {}, {}", e1.getMessage(), e1);
 		}
 	}
 

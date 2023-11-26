@@ -1,16 +1,9 @@
 server:
   servlet:
     context-path: /
-    session:
-      persistent: true
   port: 2021
-  error:
-    whitelabel:
-      enabled: true
 
 spring:
-  devtools:
-    add-properties: false
   banner:
     location: banner.txt
   profiles:
@@ -19,21 +12,3 @@ spring:
     serialization: 
       fail-on-empty-beans: false
       indent-output: true
-
-springdoc:
-  version: 2.2.1
-  api-docs: 
-    path: /api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    display-request-duration: true
-    groups-order: DESC
-    operationsSorter: method
-    disable-swagger-default-url: true
-    use-root-path: true
-  show-actuator: true
-  group-configs:
-    - group: stores
-      paths-to-match: /api/**
-  cache:
-    disabled: true

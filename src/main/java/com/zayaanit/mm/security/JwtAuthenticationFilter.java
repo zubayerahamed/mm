@@ -10,8 +10,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.zayaanit.mm.repo.TokenRepo;
 import com.zayaanit.mm.service.impl.UserServiceImpl;
-import com.zayaanit.mm.util.JwtUtilities;
+import com.zayaanit.mm.util.JwtService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -27,8 +28,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-	private final JwtUtilities jwtUtil;
+	private final JwtService jwtService;
 	private final UserServiceImpl userDetailService;
+	private final TokenRepo tokenRepository;
 
 	@Override
 	protected void doFilterInternal(
@@ -37,22 +39,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			@NonNull FilterChain filterChain
 		) throws ServletException, IOException {
 
-		final String authoriazationHeader = request.getHeader("Authorization");
-
-		String jwt = null;
-		String username = null;
-
-		if (authoriazationHeader != null && authoriazationHeader.startsWith("Bearer ")) {
-			jwt = authoriazationHeader.substring(7);
-			username = jwtUtil.extractUsername(jwt);
+		// Ignore filter requests if for authentication related
+		if (request.getServletPath().contains("/api/v1/auth")) {
+			filterChain.doFilter(request, response);
+			return;
 		}
 
-		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = this.userDetailService.loadUserByUsername(username);
-			if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt, userDetails))) {
-				UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-				upat.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				SecurityContextHolder.getContext().setAuthentication(upat);
+		final String authHeader = request.getHeader("Authorization");
+		final String jwt;
+		final String userEmail;
+		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
+		jwt = authHeader.substring(7);
+		userEmail = jwtService.extractUsername(jwt);
+
+		if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			UserDetails userDetails = this.userDetailService.loadUserByUsername(userEmail);
+			boolean isTokenValid = tokenRepository.findByToken(jwt).map(t -> !t.isExpired() && !t.isRevoked()).orElse(false);
+			if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(authToken);
 			}
 		}
 

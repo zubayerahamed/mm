@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.zayaanit.mm.entity.BaseEntity;
 import com.zayaanit.mm.entity.User;
@@ -30,6 +31,7 @@ public abstract class AbstractBaseService<E extends BaseEntity, REQ, RES> extend
 	@Autowired private UserRepo userRepo;
 	@Autowired protected EntityManager em;
 	@Autowired protected JdbcTemplate jdbcTemplate;
+	@Autowired protected BCryptPasswordEncoder passwordEncoder;
 	private final ServiceRepository<E> repository;
 	private ModelMapper modelMapper;
 

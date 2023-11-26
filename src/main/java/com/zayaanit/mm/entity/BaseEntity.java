@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Temporal;
@@ -38,6 +39,6 @@ public class BaseEntity {
 
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
-	@jakarta.persistence.JoinColumn(name="user_id", nullable = true)
+	@JoinColumn(name="user_id", nullable = true)
 	private User user;
 }

@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestApiController
-@RequestMapping("/api/account")
+@RequestMapping("/api/v1/account")
 public class AccountController extends AbstractBaseController<Account, AccountReqDto, AccountResDto> {
 
 	private AccountService<AccountReqDto, AccountResDto> accountService;

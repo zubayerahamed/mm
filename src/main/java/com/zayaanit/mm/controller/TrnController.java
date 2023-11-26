@@ -13,7 +13,7 @@ import com.zayaanit.mm.service.TrnHistoryService;
  * @since Nov 18, 2023
  */
 @RestApiController
-@RequestMapping("/api/trn")
+@RequestMapping("/api/v1/trn")
 public class TrnController extends AbstractBaseController<TrnHistory, TrnHistoryReqDto, TrnHistoryResDto> {
 
 	private TrnHistoryService<TrnHistoryReqDto, TrnHistoryResDto> trnService;

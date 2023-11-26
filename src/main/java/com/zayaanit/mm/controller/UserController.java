@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestApiController
-@RequestMapping("/api/user")
+@RequestMapping("/api/v1/user")
 @Tag(name = "User", description = "The User API. Contains all the operations that can be performed on a user.")
 public class UserController extends AbstractBaseController<User, UserReqDto, UserResDto> {
 

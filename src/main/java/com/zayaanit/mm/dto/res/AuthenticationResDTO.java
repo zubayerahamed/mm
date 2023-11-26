@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationResDTO {
 	String token;
+	String refreshToken;
 }
