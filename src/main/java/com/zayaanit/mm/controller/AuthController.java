@@ -3,8 +3,8 @@ package com.zayaanit.mm.controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import com.zayaanit.mm.annotations.RestApiController;
 import com.zayaanit.mm.dto.req.AuthenticationReqDTO;
 import com.zayaanit.mm.dto.res.AuthenticationResDTO;
 import com.zayaanit.mm.entity.User;
@@ -12,6 +12,8 @@ import com.zayaanit.mm.service.AuthenticationService;
 import com.zayaanit.mm.util.Response;
 
 import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +23,12 @@ import lombok.extern.slf4j.Slf4j;
  * @since Nov 17, 2023
  */
 @Slf4j
-@RestController
+@RestApiController
 @RequestMapping("/api/v1/auth")
+@Tag(
+	name = "Authentication", 
+	description = "The Authentication API. Contains all the operations that can be performed on an authentication."
+)
 public class AuthController extends AbstractBaseController<User, AuthenticationReqDTO, AuthenticationResDTO> {
 
 	private AuthenticationService<AuthenticationReqDTO, AuthenticationResDTO> authservice;
@@ -32,6 +38,7 @@ public class AuthController extends AbstractBaseController<User, AuthenticationR
 		this.authservice = authservice;
 	}
 
+	@Operation(summary = "Register", description = "Register a new user")
 	@PostMapping("/register")
 	public Response<AuthenticationResDTO> register(@RequestBody AuthenticationReqDTO reqDto) {
 		try {
@@ -42,6 +49,7 @@ public class AuthController extends AbstractBaseController<User, AuthenticationR
 		}
 	}
 
+	@Operation(summary = "Authenticate", description = "Generate authentication token")
 	@PostMapping("/authenticate")
 	public Response<AuthenticationResDTO> authenticate(@RequestBody AuthenticationReqDTO reqDto) {
 		try {
@@ -52,6 +60,7 @@ public class AuthController extends AbstractBaseController<User, AuthenticationR
 		}
 	}
 
+	@Operation(summary = "Refresh Token", description = "Refresh the access token")
 	@PostMapping("/refresh-token")
 	public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
 		try {

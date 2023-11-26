@@ -21,7 +21,7 @@ public class AbstractBaseController<E, REQ, RES> extends CommonFunctionsImpl<RES
 
 	protected final BaseService<REQ, RES> service;
 
-	@Operation(summary = "Get All", description = "Get All Data")
+	@Operation(summary = "Get all", description = "Get all data")
 	@GetMapping
 	@Override
 	public Response<RES> getAll() {
@@ -33,7 +33,7 @@ public class AbstractBaseController<E, REQ, RES> extends CommonFunctionsImpl<RES
 		}
 	}
 
-	@Operation(summary = "Save", description = "Save Data")
+	@Operation(summary = "Save", description = "Store data")
 	@PostMapping
 	@Override
 	public Response<RES> save(@RequestBody REQ req) {
@@ -45,7 +45,7 @@ public class AbstractBaseController<E, REQ, RES> extends CommonFunctionsImpl<RES
 		}
 	}
 
-	@Operation(summary = "Update", description = "Update Data By Id")
+	@Operation(summary = "Update", description = "Edit data")
 	@PutMapping("/{id}")
 	@Override
 	public Response<RES> update(@PathVariable Long id, @RequestBody REQ req) {
@@ -57,7 +57,7 @@ public class AbstractBaseController<E, REQ, RES> extends CommonFunctionsImpl<RES
 		}
 	}
 
-	@Operation(summary = "Find", description = "Find Data By Id")
+	@Operation(summary = "Find", description = "Find data")
 	@GetMapping("/{id}")
 	@Override
 	public Response<RES> find(@PathVariable Long id) {
@@ -69,7 +69,7 @@ public class AbstractBaseController<E, REQ, RES> extends CommonFunctionsImpl<RES
 		}
 	}
 
-	@Operation(summary = "Delete", description = "Delete Data By Id")
+	@Operation(summary = "Delete", description = "Delete data")
 	@DeleteMapping("/{id}")
 	@Override
 	public Response<RES> delete(@PathVariable Long id) {

@@ -8,18 +8,21 @@ import com.zayaanit.mm.dto.res.TrnHistoryResDto;
 import com.zayaanit.mm.entity.TrnHistory;
 import com.zayaanit.mm.service.TrnHistoryService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 /**
  * @author Zubayer Ahamed
  * @since Nov 18, 2023
  */
 @RestApiController
 @RequestMapping("/api/v1/trn")
+@Tag(
+		name = "Transaction", 
+		description = "The Transaction API. Contains all the operations that can be performed on transaction."
+	)
 public class TrnController extends AbstractBaseController<TrnHistory, TrnHistoryReqDto, TrnHistoryResDto> {
-
-	private TrnHistoryService<TrnHistoryReqDto, TrnHistoryResDto> trnService;
 
 	TrnController(TrnHistoryService<TrnHistoryReqDto, TrnHistoryResDto> trnService){
 		super(trnService);
-		this.trnService = trnService;
 	}
 }

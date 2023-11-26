@@ -13,6 +13,7 @@ import com.zayaanit.mm.service.AccountService;
 import com.zayaanit.mm.util.Response;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,6 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestApiController
 @RequestMapping("/api/v1/account")
+@Tag(
+	name = "Account", 
+	description = "The Account API. Contains all the operations that can be performed on an Account."
+)
 public class AccountController extends AbstractBaseController<Account, AccountReqDto, AccountResDto> {
 
 	private AccountService<AccountReqDto, AccountResDto> accountService;
@@ -31,8 +36,8 @@ public class AccountController extends AbstractBaseController<Account, AccountRe
 		this.accountService = accountService;
 	}
 
-	@Operation(summary = "Get All By Account Type", description = "Get All By Account Type")
-	@GetMapping("/allbytype/{accountType}")
+	@Operation(summary = "Get all", description = "Get all account by account type")
+	@GetMapping("/all/{accountType}")
 	public Response<AccountResDto> getAllByAccountType(@PathVariable AccountType accountType) {
 		try {
 			return accountService.getAllByAccountType(accountType);
@@ -41,4 +46,5 @@ public class AccountController extends AbstractBaseController<Account, AccountRe
 			return getErrorResponse(e.getMessage());
 		}
 	}
+
 }
