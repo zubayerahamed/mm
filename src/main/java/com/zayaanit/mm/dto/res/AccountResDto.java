@@ -1,5 +1,7 @@
 package com.zayaanit.mm.dto.res;
 
+import java.math.BigDecimal;
+
 import org.modelmapper.ModelMapper;
 
 import com.zayaanit.mm.entity.Account;
@@ -27,4 +29,8 @@ public class AccountResDto extends BaseResponseDTO<Account> {
 	private String name;
 	private String note;
 	private AccountType accountType;
+
+	private BigDecimal totalIncome;
+	private BigDecimal totalExpense;
+	private BigDecimal balance;
 }

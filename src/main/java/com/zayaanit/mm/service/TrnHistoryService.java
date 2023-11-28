@@ -6,4 +6,5 @@ package com.zayaanit.mm.service;
  */
 public interface TrnHistoryService<REQ, RES> extends BaseService<REQ, RES> {
 
+	
 }

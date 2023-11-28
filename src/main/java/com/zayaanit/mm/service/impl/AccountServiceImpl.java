@@ -1,6 +1,7 @@
 package com.zayaanit.mm.service.impl;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -146,6 +147,19 @@ public class AccountServiceImpl extends AbstractBaseService<Account, AccountReqD
 		List<Account> list = accountRepo.findAllByAccountTypeAndUser(accountType, getLoggedInUser());
 		if (list == null || list.isEmpty()) return getErrorResponse("No accounts found");
 		list.sort(Comparator.comparing(Account::getName));
+
+		// Extra data
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		for(Account ac : list) {
+			if(AccountType.INCOME_SOURCE.equals(accountType)) {
+				ac.setTotalIncome(trnHistoryRepo.getTotalIncome(ac.getId(), getLoggedInUser().getId()));
+			} else if (AccountType.EXPENSE_TYPE.equals(accountType)) {
+				ac.setTotalExpense(trnHistoryRepo.getTotalExpense(ac.getId(), getLoggedInUser().getId()));
+			} else {
+				ac.setBalance(trnHistoryRepo.getCurrentBalance(ac.getId(), getLoggedInUser().getId(), sdf.format(new Date())));
+			}
+		}
+
 		return getSuccessResponse("Found List of Accounts", list.stream().map(data -> new ModelMapper().map(data, AccountResDto.class)).collect(Collectors.toList()));
 	}
 

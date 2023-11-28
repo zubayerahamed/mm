@@ -10,6 +10,5 @@ import com.zayaanit.mm.util.Response;
  */
 public interface AccountService<REQ, RES> extends BaseService<REQ, RES> {
 
-	
 	public Response<RES> getAllByAccountType(AccountType accountType) throws ServiceException;
 }

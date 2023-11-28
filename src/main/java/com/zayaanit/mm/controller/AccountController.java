@@ -12,6 +12,7 @@ import com.zayaanit.mm.enums.AccountType;
 import com.zayaanit.mm.service.AccountService;
 import com.zayaanit.mm.util.Response;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,13 @@ public class AccountController extends AbstractBaseController<Account, AccountRe
 			log.error("Error is {}, {}", e.getMessage(), e);
 			return getErrorResponse(e.getMessage());
 		}
+	}
+
+	@Hidden
+	@Override
+	public Response<AccountResDto> getAll() {
+		// TODO Auto-generated method stub
+		return super.getAll();
 	}
 
 }
